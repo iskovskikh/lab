@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "lab"
+version = "0.1.0"
+description = ""
+authors = ["Alexey Iskovskikh <iskovskikh@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.4"
+djangorestframework = "^3.15.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+pytest-django = "^4.8.0"
+drf-spectacular = "^0.27.2"
+setuptools = "^69.5.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
