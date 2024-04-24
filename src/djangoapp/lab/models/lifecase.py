@@ -7,7 +7,6 @@ from laboratory.patient.domain.previous_case import PreviousCaseId
 
 
 class LifeCaseModel(models.Model):
-    commet = models.CharField()
     id = models.UUIDField(primary_key=True)
     cito = models.BooleanField()
     patient_id = models.UUIDField()

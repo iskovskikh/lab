@@ -42,7 +42,7 @@ def register_edit_lifecase_command_handler(
 ):
     casetts = lifecase_repo.get_cassets()
 
-    cassetts ....
+    # cassetts ....
 
 
 def register_new_lifecase_command_handler(
@@ -51,23 +51,20 @@ def register_new_lifecase_command_handler(
     patient_repo: AbstractPatientRepository
 ):
 
-
-
-
-    previous_cases = ...
+    # previous_cases = ...
 
     # patient = patient_repo.get_by_ipa(command.data.patient.ipa)
-    patient = PatientModel.objects.get_or_create(ipa=command.data.patient.ipa)
+    # patient = PatientModel.objects.get_or_create(ipa=command.data.patient.ipa)
 
-    if patient is None:
-        patient = Patient()
+    # if patient is None:
+    #     patient = Patient()
 
-    lifecase = LifeCase.factory(
-        cito=...,
-        patient_id=...,
-        selected_previous_cases=previous_cases,
-    )
+    # lifecase = LifeCase.factory(
+    #     cito=...,
+    #     patient_id=...,
+    #     selected_previous_cases=previous_cases,
+    # )
 
-    lifecase_repo.add(lifecase)
+    # lifecase_repo.add(lifecase)
 
     pass

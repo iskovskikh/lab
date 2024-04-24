@@ -11,19 +11,18 @@ class LifeCaseId(EntityId):
 
 @dataclass(kw_only=True)
 class LifeCase(Entity[LifeCaseId]):
-    commet:str = ?
     cito: bool = False
     patient_id: PatientId = None
     selected_previous_cases: list[PreviousCaseId] = field(default_factory=list)
 
     @staticmethod
     def factory(
-        cito,
-        patient_id,
-        selected_previous_cases,
+            cito,
+            patient_id,
+            selected_previous_cases,
     ) -> 'LifeCase':
 
-        self.validete_selected_previous_cases()
+        LifeCase.validate_selected_previous_cases()
 
         lifecase = LifeCase(
             id=LifeCaseId.next_id(),
@@ -34,4 +33,6 @@ class LifeCase(Entity[LifeCaseId]):
 
         return lifecase
 
-    def validete_selected_previous_cases()
+    @staticmethod
+    def validate_selected_previous_cases():
+        ...

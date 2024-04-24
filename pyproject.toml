@@ -3,6 +3,10 @@ name = "lab"
 version = "0.1.0"
 description = ""
 authors = ["Alexey Iskovskikh <iskovskikh@gmail.com>"]
+packages = [
+    { include = "djangoapp", from = "src" },
+    { include = "laboratory", from = "src" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
