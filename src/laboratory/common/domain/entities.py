@@ -2,6 +2,9 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Generic, TypeVar
 
+from laboratory.common.domain.execeptions import BusinessRuleException
+from laboratory.common.domain.rules import BusinessRule
+
 
 class EntityId(uuid.UUID):
     @classmethod
@@ -31,3 +34,9 @@ class Entity(Generic[EntityIdType]):
     @classmethod
     def next_id(cls) -> EntityIdType:
         return EntityIdType.next_id()
+
+    def check_rule(self, rule: BusinessRule):
+        if rule.is_broken():
+            raise BusinessRuleException(rule)
+
+
