@@ -9,7 +9,3 @@ class InMemoryLifeCaseRepositoryRepository(InMemoryGenericRepository, AbstractLi
 
 class DjangoLifeCaseRepositoryRepository(DjangoGenericRepository, AbstractLifeCaseRepository):
     model_class = LifeCaseModel
-
-    def get_cassets(self):
-
-        return CassetModel.objects.filteer(...)

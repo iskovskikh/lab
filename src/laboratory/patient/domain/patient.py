@@ -39,7 +39,6 @@ class Patient(Entity[PatientId]):
 
 
     def update_patient(self, data):
-        validate(date)
         ...
 
     def get_previous_case_by_id(self, id: PreviousCaseId) -> PreviousCase:

@@ -7,6 +7,10 @@ class FlaskId(EntityId):
     pass
 
 
+class FlaskDefectVO:
+    pass
+
+
 @dataclass(kw_only=True)
 class Flask(Entity[FlaskId]):
     pieces_count: int

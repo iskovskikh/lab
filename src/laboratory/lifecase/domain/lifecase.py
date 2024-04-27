@@ -1,36 +1,27 @@
 from dataclasses import dataclass, field
 
 from laboratory.common.domain.entities import Entity, EntityId
-from laboratory.common.domain.value_objects import ValueObject
 from laboratory.lifecase.domain.flask import Flask
 from laboratory.lifecase.domain.rules import PiecesCountGreaterThanZero, FlasksCountGreaterThanZero, IsNotLastFlask
 from laboratory.patient.domain.patient import PatientId
 from laboratory.patient.domain.previous_case import PreviousCaseId
+
+from laboratory.lifecase.domain.value_objects import Defect, ReferralDefectVO, MaterialDefectVO
 
 
 class LifeCaseId(EntityId):
     pass
 
 
-@dataclass(frozen=True, kw_only=True)
-class LifecaseDefectVO(ValueObject):
-    comment: str = ''
-
-
-@dataclass(frozen=True, kw_only=True)
-class MaterialDefectVO(ValueObject):
-    comment: str = ''
-
-
 @dataclass(kw_only=True)
 class LifeCase(Entity[LifeCaseId]):
     cito: bool = False
-    patient_id: PatientId = None
+    patient_id: PatientId | None = None
     selected_previous_cases: list[PreviousCaseId] = field(default_factory=list)
     flasks: list[Flask] = field(default_factory=list)
 
-    lifecase_defect: LifecaseDefectVO = None
-    material_defect: MaterialDefectVO = None
+    referral_defect: ReferralDefectVO | None = None
+    material_defect: MaterialDefectVO | None = None
 
     @staticmethod
     def factory(
@@ -57,9 +48,21 @@ class LifeCase(Entity[LifeCaseId]):
         self.check_rule(PiecesCountGreaterThanZero(flask.pieces_count))
         self.flasks.append(flask)
 
+    def update_flask(self, flask: Flask):
+        ...
+
     def remove_flask(self, flask: Flask):
         self.check_rule(IsNotLastFlask(self.flasks))
         self.flasks.remove(flask)
 
-    def set_defect(self):
-        pass
+    def set_defect(self, defect: Defect):
+
+        if defect.defect_type == ...:
+            self.lifecase.referral_defect = ReferralDefectVO(comment=defect.coment)
+        else:
+            self.lifecase.material_defect = MaterialDefectVO(comment=defect.coment)
+
+        for flask in defect.flasks:
+            self.update_flask(flask)
+
+        # emit event defect updated
