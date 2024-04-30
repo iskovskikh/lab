@@ -1,16 +1,13 @@
 from dataclasses import dataclass, field
 
-from laboratory.common.domain.entities import Entity, EntityId
-from laboratory.lifecase.domain.flask import Flask
-from laboratory.lifecase.domain.rules import PiecesCountGreaterThanZero, FlasksCountGreaterThanZero, IsNotLastFlask
+from laboratory.common.domain.entities import Entity
+from laboratory.dictionaries.domain.enums import DefectKindChoices
+from laboratory.lifecase.domain.entities.flask import Flask
+from laboratory.lifecase.domain.value_objects import FlaskDefectVO, LifeCaseId
+from laboratory.lifecase.domain.rules.lifecase_rules import FlasksCountGreaterThanZero, IsNotLastFlask
+from laboratory.lifecase.domain.value_objects import DefectVO, ReferralDefectVO, MaterialDefectVO
 from laboratory.patient.domain.patient import PatientId
 from laboratory.patient.domain.previous_case import PreviousCaseId
-
-from laboratory.lifecase.domain.value_objects import Defect, ReferralDefectVO, MaterialDefectVO
-
-
-class LifeCaseId(EntityId):
-    pass
 
 
 @dataclass(kw_only=True)
@@ -45,24 +42,28 @@ class LifeCase(Entity[LifeCaseId]):
         return lifecase
 
     def add_flask(self, flask: Flask):
-        self.check_rule(PiecesCountGreaterThanZero(flask.pieces_count))
         self.flasks.append(flask)
 
-    def update_flask(self, flask: Flask):
+    def update_flask(self, flask: FlaskDefectVO):
+        # self.check_rule(CanUpdateFlask(self.flask))
+        # запретить обновлять флаконы если статус случая не подходящий
         ...
 
     def remove_flask(self, flask: Flask):
         self.check_rule(IsNotLastFlask(self.flasks))
         self.flasks.remove(flask)
 
-    def set_defect(self, defect: Defect):
+    def set_defect(self, defect: DefectVO):
 
-        if defect.defect_type == ...:
-            self.lifecase.referral_defect = ReferralDefectVO(comment=defect.coment)
+        # self.check_rule(CanSetDefect(self.lifecase))
+        # запретить добавлять дефект если статус случая не подходящий
+
+        if defect.kind == DefectKindChoices.REFERRAL:
+            self.referral_defect = ReferralDefectVO(id=defect.id, comment=defect.comment)
         else:
-            self.lifecase.material_defect = MaterialDefectVO(comment=defect.coment)
+            self.material_defect = MaterialDefectVO(id=defect.id, comment=defect.comment)
 
         for flask in defect.flasks:
             self.update_flask(flask)
 
-        # emit event defect updated
+        # emit defect update event

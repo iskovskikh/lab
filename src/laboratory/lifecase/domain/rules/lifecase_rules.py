@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from laboratory.common.domain.rules import BusinessRule
-from laboratory.lifecase.domain.flask import Flask
+from laboratory.lifecase.domain.entities.flask import Flask
 
 
 @dataclass
@@ -11,7 +11,8 @@ class FlasksCountGreaterThanZero(BusinessRule):
     flasks: list[Flask]
 
     def is_broken(self):
-        return len(self.flasks) > 0
+        return len(self.flasks) < 1
+
 
 @dataclass
 class IsNotLastFlask(BusinessRule):
@@ -21,12 +22,3 @@ class IsNotLastFlask(BusinessRule):
 
     def is_broken(self):
         return len(self.flasks) > 1
-
-@dataclass
-class PiecesCountGreaterThanZero(BusinessRule):
-    __message = 'Количество кусков во флаконе должно быть больше 0'
-
-    piece_count: int
-
-    def is_broken(self):
-        return self.piece_count > 0

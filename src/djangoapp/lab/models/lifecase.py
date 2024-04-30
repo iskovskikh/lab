@@ -2,7 +2,9 @@ import uuid
 
 from django.db import models
 
-from laboratory.lifecase.domain.lifecase import LifeCase, LifeCaseId
+from laboratory.lifecase.domain.entities.lifecase import LifeCase
+from laboratory.lifecase.domain.value_objects import LifeCaseId
+from laboratory.patient.domain.patient import PatientId
 from laboratory.patient.domain.previous_case import PreviousCaseId
 
 
@@ -13,11 +15,11 @@ class LifeCaseModel(models.Model):
 
     def to_domain(self) -> LifeCase:
         entity = LifeCase(
-            id=self.id,
+            id=LifeCaseId(str(self.id)),
             cito=self.cito,
-            patient_id=self.patient_id,
+            patient_id=PatientId(str(self.patient_id)),
             selected_previous_cases=[
-                model.value
+                PreviousCaseId(str(model.value))
                 for model in self.selected_previous_cases.all()
             ]
         )

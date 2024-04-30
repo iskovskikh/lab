@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 from datetime import date
 from uuid import UUID
 
-from laboratory.lifecase.domain.lifecase import LifeCase
 from laboratory.lifecase.domain.repository import AbstractLifeCaseRepository
 from laboratory.patient.domain.repository import AbstractPatientRepository
 
@@ -31,26 +30,25 @@ class LifeCaseRegisterDTO:
     cito: bool
     patient: PatientDTO | None
 
+
 @dataclass
 class RegisterNewLifeCaseCommand:
     data: LifeCaseRegisterDTO
 
-def register_edit_lifecase_command_handler(
-    command: RegisterNewLifeCaseCommand,
-    lifecase_repo: AbstractLifeCaseRepository,
-    patient_repo: AbstractPatientRepository
-):
-    casetts = lifecase_repo.get_cassets()
 
-    # cassetts ....
+def register_edit_lifecase_command_handler(
+        command: RegisterNewLifeCaseCommand,
+        lifecase_repo: AbstractLifeCaseRepository,
+        patient_repo: AbstractPatientRepository
+):
+    ...
 
 
 def register_new_lifecase_command_handler(
-    command: RegisterNewLifeCaseCommand,
-    lifecase_repo: AbstractLifeCaseRepository,
-    patient_repo: AbstractPatientRepository
+        command: RegisterNewLifeCaseCommand,
+        lifecase_repo: AbstractLifeCaseRepository,
+        patient_repo: AbstractPatientRepository
 ):
-
     # previous_cases = ...
 
     # patient = patient_repo.get_by_ipa(command.data.patient.ipa)

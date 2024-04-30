@@ -15,7 +15,7 @@ class PreviousCaseModel(models.Model):
 
     def to_domain(self) -> PreviousCaseEntity:
         previous_case = PreviousCaseEntity(
-            id=PreviousCaseEntityId(self.id),
+            id=PreviousCaseEntityId(str(self.id)),
             registration_number=self.registration_number,
             organization_title=self.organization_title,
             completion_date=self.completion_date,

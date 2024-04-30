@@ -3,9 +3,9 @@ from laboratory.common.infrastructure.repository import DjangoGenericRepository,
 from laboratory.lifecase.domain.repository import AbstractLifeCaseRepository
 
 
-class InMemoryLifeCaseRepositoryRepository(InMemoryGenericRepository, AbstractLifeCaseRepository):
+class InMemoryLifeCaseRepository(InMemoryGenericRepository, AbstractLifeCaseRepository):
     pass
 
 
-class DjangoLifeCaseRepositoryRepository(DjangoGenericRepository, AbstractLifeCaseRepository):
+class DjangoLifeCaseRepository(DjangoGenericRepository, AbstractLifeCaseRepository):
     model_class = LifeCaseModel

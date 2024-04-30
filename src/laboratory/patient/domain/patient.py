@@ -36,13 +36,11 @@ class Patient(Entity[PatientId]):
 
         return patient
 
-
-
     def update_patient(self, data):
         ...
 
-    def get_previous_case_by_id(self, id: PreviousCaseId) -> PreviousCase:
-        ...
+    # def get_previous_case_by_id(self, id: PreviousCaseId) -> PreviousCase:
+    #     ...
 
     def add_previous_case(self, previous_case: PreviousCase):
         ...

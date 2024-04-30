@@ -35,7 +35,8 @@ class Entity(Generic[EntityIdType]):
     def next_id(cls) -> EntityIdType:
         return EntityIdType.next_id()
 
-    def check_rule(self, rule: BusinessRule):
+    @staticmethod
+    def check_rule(rule: BusinessRule):
         if rule.is_broken():
             raise BusinessRuleException(rule)
 

@@ -1,33 +1,18 @@
 from dataclasses import dataclass
 
-from laboratory.dictionaries.domain.flask_defect import FlaskDefectId
 from laboratory.dictionaries.domain.lifecase_defect import LifeCaseDefectId
-from laboratory.lifecase.domain.flask import FlaskId
-from laboratory.lifecase.domain.lifecase import LifeCaseId
+from laboratory.dictionaries.domain.repository import AbstractLifeCaseDefectRepository
 from laboratory.lifecase.domain.repository import AbstractLifeCaseRepository
-from laboratory.lifecase.domain.value_objects import Defect
-
-
-@dataclass
-class FlaskDefectsDTO:
-    flask_id: FlaskId
-    pieces_count_to_work: int
-    defect: FlaskDefectId | None
+from laboratory.lifecase.domain.value_objects import DefectVO, FlaskDefectVO, LifeCaseId
 
 
 @dataclass
 class SetLifeCaseDefectCommand:
     lifecase_id: LifeCaseId
+    flasks: list[FlaskDefectVO]
     comment: str
-    flasks: list[FlaskDefectsDTO]
     defect_id: LifeCaseDefectId
 
-
-@dataclass
-class DefectDTO:
-    lifecase: LifeCase
-    comment: str
-    defect: LifeCaseDefect
 
 
 def set_lifecase_defect_handler(
@@ -35,18 +20,17 @@ def set_lifecase_defect_handler(
         lifecase_repo: AbstractLifeCaseRepository,
         defect_repo: AbstractLifeCaseDefectRepository
 ):
-    ...
 
     lifecase = lifecase_repo.get(command.lifecase_id)
-    # defect_type= defect_repo.get(command.defect_id)
+    defect_item = defect_repo.get(command.defect_id)
 
-    defect_type = ...
-
-    defect = Defect(
-        lifecase=lifecase,
+    defect = DefectVO(
+        id=defect_item.id,
+        title=defect_item.title,
+        type=defect_item.type,
+        kind=defect_item.kind,
         comment=command.comment,
-        defect_type=defect_type,
-        flasks=[Flask(flask_data) for flask_data in command.flasks]
+        flasks=command.flasks
     )
 
     lifecase.set_defect(defect)

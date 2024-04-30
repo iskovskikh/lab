@@ -1,11 +1,11 @@
 from typing import Any, TypeVar
 
-import django.db.models
+from django.db.models import Model, Manager
 
 from laboratory.common.domain.repository import AbstractRepository
 from laboratory.common.domain.types import Entity, EntityId
 
-DjangoModel = TypeVar('DjangoModel', bound=django.db.models.Model)
+DjangoModel = TypeVar('DjangoModel', bound=Model)
 
 
 class InMemoryGenericRepository(AbstractRepository[EntityId, Entity]):

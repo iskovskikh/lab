@@ -1,12 +1,12 @@
 import abc
-from typing import TypeVar
+from typing import TypeVar, Generic
 
 from laboratory.common.infrastructure import repository
 
 RepositoryType = TypeVar('RepositoryType', bound=repository.AbstractRepository)
 
 
-class AbstractUnitOfWork(abc.ABC):
+class AbstractUnitOfWork(Generic[RepositoryType], abc.ABC):
     repository: RepositoryType
 
     def __enter__(self) -> 'AbstractUnitOfWork':

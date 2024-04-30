@@ -1,54 +1,32 @@
 import pytest
 
-from laboratory.lifecase.domain.lifecase import LifeCase
-from laboratory.lifecase.infrastructure.lifecase_repository import InMemoryLifeCaseRepositoryRepository, \
-    DjangoLifeCaseRepositoryRepository
+from laboratory.lifecase.domain.entities.lifecase import LifeCase
+from laboratory.lifecase.infrastructure.lifecase_repository import InMemoryLifeCaseRepository, \
+    DjangoLifeCaseRepository
 from laboratory.patient.domain.patient import PatientId
 from laboratory.patient.domain.previous_case import PreviousCaseId
 
 
-def test_lifecase_in_memory_repository_can_save():
-    previous_cases = [
-        PreviousCaseId.next_id(),
-        PreviousCaseId.next_id(),
-        PreviousCaseId.next_id()
-    ]
+def test_lifecase_in_memory_repository_can_save(new_lifecase):
 
-    lifecase = LifeCase.factory(
-        cito=True,
-        patient_id=PatientId.next_id(),
-        selected_previous_cases=previous_cases
-    )
+    repo = InMemoryLifeCaseRepository()
+    repo.add(new_lifecase)
 
-    repo = InMemoryLifeCaseRepositoryRepository()
-    repo.add(lifecase)
+    saved_lifecase = repo.get(new_lifecase.id)
 
-    saved_lifecase = repo.get(lifecase.id)
-
-    assert saved_lifecase.id == lifecase.id
-    assert saved_lifecase.patient_id == lifecase.patient_id
-    assert saved_lifecase.selected_previous_cases == lifecase.selected_previous_cases
+    assert saved_lifecase.id == new_lifecase.id
+    assert saved_lifecase.patient_id == new_lifecase.patient_id
+    assert saved_lifecase.selected_previous_cases == new_lifecase.selected_previous_cases
 
 
 @pytest.mark.django_db
-def test_lifecase_django_repository_can_save():
-    previous_cases = [
-        PreviousCaseId.next_id(),
-        PreviousCaseId.next_id(),
-        PreviousCaseId.next_id()
-    ]
+def test_lifecase_django_repository_can_save(new_lifecase):
 
-    lifecase = LifeCase.factory(
-        cito=True,
-        patient_id=PatientId.next_id(),
-        selected_previous_cases=previous_cases
-    )
+    repo = DjangoLifeCaseRepository()
 
-    repo = DjangoLifeCaseRepositoryRepository()
+    repo.add(new_lifecase)
+    saved_lifecase = repo.get(new_lifecase.id)
 
-    repo.add(lifecase)
-    saved_lifecase = repo.get(lifecase.id)
-
-    assert saved_lifecase.id == lifecase.id
-    assert saved_lifecase.patient_id == lifecase.patient_id
-    assert saved_lifecase.selected_previous_cases == lifecase.selected_previous_cases
+    assert saved_lifecase.id == new_lifecase.id
+    assert saved_lifecase.patient_id == new_lifecase.patient_id
+    assert saved_lifecase.selected_previous_cases == new_lifecase.selected_previous_cases

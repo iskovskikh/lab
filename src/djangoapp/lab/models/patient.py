@@ -16,7 +16,7 @@ class PatientModel(models.Model):
 
     def to_domain(self) -> PatientEntity:
         patient = PatientEntity(
-            id=PatientEntityId(self.id),
+            id=PatientEntityId(str(self.id)),
             surname=self.surname,
             name=self.name,
             patronymic=self.patronymic,
@@ -32,10 +32,10 @@ class PatientModel(models.Model):
         item = PatientModel.objects.get_or_create(
             id=patient.id,
             defaults=dict(
-                name = patient.name,
-                surname = patient.surname,
-                patronymic = patient.patronymic,
-                birthday = patient.birthday,
+                name=patient.name,
+                surname=patient.surname,
+                patronymic=patient.patronymic,
+                birthday=patient.birthday,
             )
         )
 
@@ -44,5 +44,3 @@ class PatientModel(models.Model):
         item.previous_cases.set(
             PreviousCaseModel.from_domain(prev_case, item) for prev_case in patient.previous_cases
         )
-
-

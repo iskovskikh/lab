@@ -1,6 +1,14 @@
 # pylint: disable=redefined-outer-name
-import time
-from pathlib import Path
+
+import pytest
+
+from laboratory.dictionaries.domain.enums import DefectTypeChoices, DefectKindChoices
+from laboratory.dictionaries.domain.lifecase_defect import LifeCaseDefect
+from laboratory.lifecase.domain.entities.flask import Flask
+from laboratory.lifecase.domain.entities.lifecase import LifeCase
+from laboratory.patient.domain.patient import PatientId
+from laboratory.patient.domain.previous_case import PreviousCaseId
+
 
 # import pytest
 # import requests
@@ -32,3 +40,36 @@ from pathlib import Path
 # @pytest.fixture(autouse=True, scope="session")
 # def wait_for_postgres_to_come_up():
 #     wait_for_postgres.wait_for_postgres_to_come_up()
+
+
+@pytest.fixture
+def new_lifecase():
+    previous_cases = [
+        PreviousCaseId.next_id(),
+        PreviousCaseId.next_id(),
+        PreviousCaseId.next_id()
+    ]
+
+    lifecase = LifeCase.factory(
+        cito=True,
+        patient_id=PatientId.next_id(),
+        selected_previous_cases=previous_cases,
+        flasks=[
+            Flask.factory(pieces_count=9, ),
+            Flask.factory(pieces_count=9, ),
+            Flask.factory(pieces_count=9, ),
+        ]
+    )
+
+    return lifecase
+
+
+@pytest.fixture
+def new_lifecase_full_referral_defect_item():
+    item = LifeCaseDefect.factory(
+        title='Some Lifecase Defect title',
+        type=DefectTypeChoices.FULL,
+        kind=DefectKindChoices.REFERRAL,
+    )
+
+    return item

@@ -11,5 +11,5 @@ class AbstractPreviousCaseRepository(AbstractRepository[PreviousCaseId, Previous
 class AbstractPatientRepository(AbstractRepository[PatientId, Patient]):
     """PatientRepository interface"""
 
-    def get_patient_by_ipa(self, ipa) -> Patient:
-        ...
+    # def get_patient_by_ipa(self, ipa) -> Patient:
+    #     ...
