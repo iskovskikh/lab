@@ -19,7 +19,7 @@ class LifeCaseId(EntityId):
 class FlaskDefectVO(ValueObject):
     flask_id: FlaskId
     pieces_count_to_work: int
-    defect_id: FlaskDefectId
+    defect_id: FlaskDefectId | None
 
 
 @dataclass(frozen=True, kw_only=True)

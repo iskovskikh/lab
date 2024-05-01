@@ -1,13 +1,14 @@
 from django.db import models
 
-from djangoapp.lab.models.previous_case import PreviousCaseModel
+from djangoapp.common.models import BaseEntityModel
+from djangoapp.lab.models.previous_case import PreviousCaseEntityModel
 from laboratory.patient.domain.patient import (
     Patient as PatientEntity,
     PatientId as PatientEntityId,
 )
 
 
-class PatientModel(models.Model):
+class PatientEntityModel(BaseEntityModel[PatientEntity]):
     id = models.UUIDField()
     surname = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
@@ -29,7 +30,7 @@ class PatientModel(models.Model):
 
     @staticmethod
     def from_domain(patient: PatientEntity):
-        item = PatientModel.objects.get_or_create(
+        item = PatientEntityModel.objects.get_or_create(
             id=patient.id,
             defaults=dict(
                 name=patient.name,
@@ -42,5 +43,5 @@ class PatientModel(models.Model):
         item.save()
 
         item.previous_cases.set(
-            PreviousCaseModel.from_domain(prev_case, item) for prev_case in patient.previous_cases
+            PreviousCaseEntityModel.from_domain(prev_case, item) for prev_case in patient.previous_cases
         )

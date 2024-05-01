@@ -1,26 +1,26 @@
 from abc import ABC, abstractmethod
 from typing import Generic
 
-from laboratory.common.domain.types import Entity, EntityId
+from laboratory.common.domain.types import EntityType, EntityIdType
 
 
-class AbstractRepository(Generic[EntityId, Entity], ABC):
+class AbstractRepository(Generic[EntityIdType, EntityType], ABC):
 
 
     @abstractmethod
-    def add(self, item: Entity) -> None:
+    def add(self, item: EntityType) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def get(self, id: EntityId) -> Entity:
+    def get(self, id: EntityIdType) -> EntityType:
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, item: Entity) -> None:
+    def update(self, item: EntityType) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def list(self) -> list[Entity]:
+    def list(self) -> list[EntityType]:
         raise NotImplementedError
 
     # @abstractmethod

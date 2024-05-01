@@ -1,13 +1,14 @@
 from django.db import models
 
-from djangoapp.lab.models.patient import PatientModel
+from djangoapp.common.models import BaseEntityModel
+from djangoapp.lab.models.patient import PatientEntityModel
 from laboratory.patient.domain.previous_case import PreviousCase as PreviousCaseEntity, \
     PreviousCaseId as PreviousCaseEntityId
 
 
-class PreviousCaseModel(models.Model):
+class PreviousCaseEntityModel(BaseEntityModel[PreviousCaseEntity]):
     id = models.UUIDField()
-    patient = models.ForeignKey(PatientModel, on_delete=models.CASCADE, related_name='previous_cases')
+    patient = models.ForeignKey(PatientEntityModel, on_delete=models.CASCADE, related_name='previous_cases')
     registration_number = models.CharField(max_length=255)
     organization_title = models.CharField(max_length=255)
     completion_date = models.CharField(max_length=255)
@@ -25,8 +26,8 @@ class PreviousCaseModel(models.Model):
         return previous_case
 
     @staticmethod
-    def from_domain(previous_case: PreviousCaseEntity, patient: PatientModel) -> 'PreviousCaseModel':
-        item, _ = PreviousCaseModel.objects.get_or_create(
+    def from_domain(previous_case: PreviousCaseEntity, patient: PatientEntityModel) -> 'PreviousCaseEntityModel':
+        item, _ = PreviousCaseEntityModel.objects.get_or_create(
             id=previous_case.id,
             defaults=dict(
                 patient=patient,

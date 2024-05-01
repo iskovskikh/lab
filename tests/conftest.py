@@ -55,9 +55,9 @@ def new_lifecase():
         patient_id=PatientId.next_id(),
         selected_previous_cases=previous_cases,
         flasks=[
-            Flask.factory(pieces_count=9, ),
-            Flask.factory(pieces_count=9, ),
-            Flask.factory(pieces_count=9, ),
+            Flask.factory(pieces_count=9),
+            Flask.factory(pieces_count=9),
+            Flask.factory(pieces_count=9),
         ]
     )
 
