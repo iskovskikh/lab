@@ -33,10 +33,6 @@ def set_lifecase_defect_handler(
         flasks=command.flasks
     )
 
-    print('lifecase_1', lifecase.referral_defect)
     lifecase.set_defect(defect)
-    print('lifecase_2', lifecase.referral_defect)
     lifecase_repo.update(lifecase)
 
-    lifecase_repo.get(lifecase.id)
-    print('lifecase_3', lifecase.referral_defect)

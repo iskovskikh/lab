@@ -47,14 +47,15 @@ class LifeCaseModel(BaseEntityModel[LifeCase]):
             defaults=dict(
                 cito=lifecase.cito,
                 patient_id=lifecase.patient_id,
-                referral_defect=ReferralDefectModel.from_domain(lifecase.referral_defect),
-                material_defect=MaterialDefectModel.from_domain(lifecase.material_defect),
+                # referral_defect=ReferralDefectModel.from_domain(lifecase.referral_defect),
+                # material_defect=MaterialDefectModel.from_domain(lifecase.material_defect),
             )
         )
 
         # @todo почему то не сохраняет так ^
-        # referral_defect = ReferralDefectModel.from_domain(lifecase.referral_defect)
-        # lifecase_model.referral_defect = referral_defect
+
+        lifecase_model.referral_defect = ReferralDefectModel.from_domain(lifecase.referral_defect)
+        lifecase_model.material_defect = MaterialDefectModel.from_domain(lifecase.material_defect)
 
         lifecase_model.selected_previous_cases.set(
             SelectedPreviousCaseModel.from_domain(value=case_id, lifecase=lifecase_model)

@@ -52,10 +52,9 @@ def register_new_lifecase_command_handler(
     # previous_cases = ...
 
     # patient = patient_repo.get_by_ipa(command.data.patient.ipa)
+    # ?
     # patient = PatientModel.objects.get_or_create(ipa=command.data.patient.ipa)
-
-    # if patient is None:
-    #     patient = Patient()
+    # patient_repo.update(patient)
 
     # lifecase = LifeCase.factory(
     #     cito=...,

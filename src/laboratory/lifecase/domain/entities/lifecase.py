@@ -58,7 +58,6 @@ class LifeCase(Entity[LifeCaseId]):
         # self.check_rule(CanSetDefect(self.lifecase))
         # запретить добавлять дефект если статус случая не подходящий
 
-        print('DefectVO', defect)
 
         if defect.kind == DefectKindChoices.REFERRAL:
             self.referral_defect = ReferralDefectVO(id=defect.id, comment=defect.comment)
@@ -69,3 +68,4 @@ class LifeCase(Entity[LifeCaseId]):
             self.update_flask(flask)
 
         # emit defect update event
+        # logging.info('defect updated!')

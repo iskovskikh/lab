@@ -23,10 +23,4 @@ class LifeCaseSetDefectApi(views.APIView):
             command = SetLifeCaseDefectCommand(**serializer.validated_data)
             app.execute(command)
 
-            l = LifeCaseModel.objects.all().first()
-            print(l.__dict__)
-
-            r = ReferralDefectModel.objects.all().first()
-            print(r.__dict__)
-
             return Response(status=status.HTTP_200_OK)
